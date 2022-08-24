@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'qcuiz_work.dart';
+
+QCuizWork ob = new QCuizWork();
 
 class QCuiz_Page extends StatefulWidget {
   const QCuiz_Page({Key? key}) : super(key: key);
@@ -9,6 +12,8 @@ class QCuiz_Page extends StatefulWidget {
 
 class _QCuiz_PageState extends State<QCuiz_Page> {
   get child => null;
+
+  List<Widget> scoreKeeper = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +34,9 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                   padding: EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Welcome to QCuiz",
+                      ob.getQue(),
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -55,7 +60,16 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      bool givenAnswer = ob.getans();
+                      if (givenAnswer == true) {
+                        print("yes");
+                      } else
+                        print("no");
+                      setState(() {
+                        ob.getno();
+                      });
+                    },
                   ),
                 ),
               ),
@@ -68,7 +82,7 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     color: Colors.red[600],
-                    child: Text(
+                    child: const Text(
                       "False",
                       style: TextStyle(
                         fontSize: 20,
@@ -76,22 +90,26 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      bool givenAnswer = ob.getans();
+                      if (givenAnswer == false) {
+                        print("yes");
+                      } else
+                        print("no");
+                      setState(() {
+                        ob.getno();
+                      });
+                    },
                   ),
                 ),
               ),
               //Row here as a score keeper
-              Row(
-                children: [
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ),
-                  Icon(
-                    color: Colors.red,
-                    Icons.close,
-                  ),
-                ],
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: Row(
+                  children: scoreKeeper,
+                ),
               ),
             ],
           ),

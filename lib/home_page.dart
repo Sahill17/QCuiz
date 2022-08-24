@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "Welcome to QCuiz",
+                'printf("Welcome to QCuiz");',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
