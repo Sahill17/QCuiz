@@ -1,10 +1,14 @@
 // ignore_for_file: deprecated_member_use, depend_on_referenced_packages
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qcuiz/home_page.dart';
-import 'package:qcuiz/qcuiz_page.dart';
+import 'package:flutter/services.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main(List<String> args) {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(QCuiz());
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'qcuiz_work.dart';
 
 QCuizWork ob = new QCuizWork();
@@ -14,6 +15,54 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
   get child => null;
 
   List<Widget> scoreKeeper = [];
+  int track = 1;
+
+  void checkAnswer(bool userAns) {
+    bool givenAnswer = ob.getans();
+    if (givenAnswer == userAns && track < 10) {
+      track++;
+      scoreKeeper.add(Icon(
+        Icons.check,
+        color: Colors.green,
+      ));
+    } else {
+      if (track >= 10) {
+        Alert(
+          context: context,
+          // type: AlertType.error,
+          title: "QCuiz",
+          desc: "You've have reached the end of the quiz.",
+
+          buttons: [
+            DialogButton(
+              color: Colors.blueGrey[900],
+              child: Text(
+                "CANCEL",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                setState(() {
+                  ob.restart();
+                  scoreKeeper.clear();
+                  track = 1;
+                  Navigator.pop(context);
+                });
+              },
+              width: 120,
+            )
+          ],
+        ).show();
+      } else
+        track++;
+      scoreKeeper.add(Icon(
+        Icons.close,
+        color: Colors.red,
+      ));
+    }
+    setState(() {
+      ob.getno();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +110,7 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      bool givenAnswer = ob.getans();
-                      if (givenAnswer == true) {
-                        print("yes");
-                      } else
-                        print("no");
-                      setState(() {
-                        ob.getno();
-                      });
+                      checkAnswer(true);
                     },
                   ),
                 ),
@@ -91,14 +133,7 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                       ),
                     ),
                     onPressed: () {
-                      bool givenAnswer = ob.getans();
-                      if (givenAnswer == false) {
-                        print("yes");
-                      } else
-                        print("no");
-                      setState(() {
-                        ob.getno();
-                      });
+                      checkAnswer(false);
                     },
                   ),
                 ),
@@ -108,6 +143,7 @@ class _QCuiz_PageState extends State<QCuiz_Page> {
                 padding:
                     const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: scoreKeeper,
                 ),
               ),

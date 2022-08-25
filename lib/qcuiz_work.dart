@@ -26,6 +26,10 @@ class QCuizWork {
         true)
   ];
 
+  void restart() {
+    _onQuestion = 0;
+  }
+
   void getno() {
     if (_onQuestion < _QuestionBank.length - 1) {
       _onQuestion++;
